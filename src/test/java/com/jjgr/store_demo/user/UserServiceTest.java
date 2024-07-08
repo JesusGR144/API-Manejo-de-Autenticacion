@@ -21,40 +21,40 @@ public class UserServiceTest {
     private UserService underTest;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         underTest = new UserService(userRepository);
     }
 
     @Test
-    void getUsers(){
-        //Dado
-        User user1 = new User("User1","user1@mail.com");
-        User user2 = new User("User2","user2@mail.com");
+    void getUsers() {
+        // Dado
+        UserEntity user1 = new UserEntity("User1", "1234", "user1@mail.com", true, true, true);
+        UserEntity user2 = new UserEntity("User2", "1234", "user2@mail.com", true, true, true);
 
-        List<User> users = List.of(user1, user2);
+        List<UserEntity> users = List.of(user1, user2);
         when(userRepository.findAll()).thenReturn(users);
 
-        //Cuando
-        List<User> result = underTest.getUsers();
+        // Cuando
+        List<UserEntity> result = underTest.getUsers();
 
-        //Entonces
+        // Entonces
         verify(userRepository, Mockito.times(2)).findAll();
         assertEquals(users, result);
     }
 
-    @Test 
+    @Test
     void addUser() {
         // Dado
-        User user = new User("Sample User 1", "samplemail1@mail.com");
+        UserEntity user = new UserEntity("Sample User 1", "1234", "samplemail1@mai.com", true, true, true);
 
-        // Cuando 
+        // Cuando
         underTest.addUser(user);
 
-        // Entonces 
-        ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        // Entonces
+        ArgumentCaptor<UserEntity> userArgumentCaptor = ArgumentCaptor.forClass(UserEntity.class);
         verify(userRepository).save(userArgumentCaptor.capture());
 
-        User capturedUser = userArgumentCaptor.getValue();
+        UserEntity capturedUser = userArgumentCaptor.getValue();
 
         assertEquals(user, capturedUser);
     }

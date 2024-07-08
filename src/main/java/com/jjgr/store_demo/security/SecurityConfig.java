@@ -26,17 +26,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     AuthenticationConfiguration authenticationConfiguration;
 
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration){
+        this.authenticationConfiguration = authenticationConfiguration;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
             .csrf(csrf -> csrf.disable())
             .httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(http -> {
-                http.requestMatchers(HttpMethod.GET, "api/user").permitAll();
-
-                http.anyRequest().authenticated();
-            }).build();
+            .build();
 
     }
 

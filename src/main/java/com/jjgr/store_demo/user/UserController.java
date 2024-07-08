@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    //Constructor
-    public UserController(UserService userService){
+    // Constructor
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PreAuthorize("permitAll()")
     @GetMapping("getAll")
-    public List<User> getAll() {
+    public List<UserEntity> getAll() {
         return userService.getUsers();
     }
 
-    //POST
+    // POST
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("addUser")
-    public void addUser(@RequestBody User user){
+    public void addUser(@RequestBody UserEntity user) {
         userService.addUser(user);
     }
 
-    //DELETE
-    @DeleteMapping(path="{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId){
+    // DELETE
+    @DeleteMapping(path = "{userId}")
+    public void deleteUser(@PathVariable("userId") Long userId) {
         // userService.deleteUser();
         userService.deleteUser(userId);
     }

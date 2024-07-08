@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 import java.util.Set;
 
 import com.jjgr.store_demo.product.Product;
-import com.jjgr.store_demo.user.User;
+import com.jjgr.store_demo.user.UserEntity;
 
 @Entity
 @Table
@@ -26,46 +26,43 @@ public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private UserEntity user;
 
     @ManyToMany
-    @JoinTable(
-        name = "cart_products",
-        joinColumns = @JoinColumn(name = "cart_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+    @JoinTable(name = "cart_products", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products;
 
-    //Constructors
-    public Cart() {}
+    // Constructors
+    public Cart() {
+    }
 
-    public Cart(User user) {
+    public Cart(UserEntity user) {
         this.user = user;
     }
 
-    //Getters
-    public Long getId(){
+    // Getters
+    public Long getId() {
         return id;
     }
 
-    public User getUser(){
+    public UserEntity getUser() {
         return user;
     }
 
-    public Set<Product> getProducts(){
+    public Set<Product> getProducts() {
         return products;
     }
 
-    //Setters
-    public void setId(Long id){
+    // Setters
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setUser(User user){
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 
-    public void setProducts(Set<Product> products){
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 }

@@ -20,7 +20,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.jjgr.store_demo.exceptions.ApiRequestException;
-import com.jjgr.store_demo.user.User;
+import com.jjgr.store_demo.user.UserEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class CartServiceTest {
@@ -48,7 +48,7 @@ public class CartServiceTest {
     @Test
     void getCarts_shouldReturnListOfCartsWhenFound() {
         // Dado
-        User user1 = new User("User1", "user1@mail.com");
+        UserEntity user1 = new UserEntity("User1", "1234","user1@mail.com", true, true, true);
         Cart cart1 = new Cart(user1);
         Cart cart2 = new Cart(user1);
         List<Cart> carts = List.of(cart1, cart2);
@@ -65,7 +65,7 @@ public class CartServiceTest {
     @Test
     void addCart_shouldThrowExceptionWhenCartIdIsTaken() {
         // Dado
-        User user = new User("User1", "user1@mail.com");
+        UserEntity user = new UserEntity("User1", "1234","user1@mail.com", true, true, true);
         Cart cart = new Cart(user);
         when(cartRepository.findById(cart.getId())).thenReturn(Optional.of(cart));
 
@@ -79,7 +79,7 @@ public class CartServiceTest {
     @Test
     void addCart_shouldSaveCartWhenIdIsNotTaken() {
         // Dado
-        User user = new User("User1", "user1@mail.com");
+        UserEntity user = new UserEntity("User1", "1234","user1@mail.com", true, true, true);
         Cart cart = new Cart(user);
         when(cartRepository.findById(cart.getId())).thenReturn(Optional.empty());
 
