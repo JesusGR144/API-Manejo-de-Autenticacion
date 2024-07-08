@@ -2,6 +2,7 @@ package com.jjgr.store_demo.user;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/user")
+@PreAuthorize("denyAll()")
 public class UserController {
     private final UserService userService;
 
@@ -20,12 +22,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("getAll")
     public List<User> getAll() {
         return userService.getUsers();
     }
 
     //POST
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("addUser")
     public void addUser(@RequestBody User user){
         userService.addUser(user);
